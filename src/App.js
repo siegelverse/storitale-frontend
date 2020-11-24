@@ -7,40 +7,37 @@ import Home from './components/Home';
 import SignUp from './components/SignUp';
 import LandingPage from './components/LandingPage';
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route
 } from "react-router-dom";
 import Profile from './components/Profile';
+import history from './history'
 
 function App() {
 
   return (
     <div className="App">
-      <Router>
-        <Switch>
+      <Router history={history}>
           <Route exact path="/">
             <LandingPage />
           </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/login">
+          <Route exact path="/home" component={()=><Home/>}/>
+          <Route exact path="/login">
             <Login />
           </Route>
-          <Route path="/signup">
+          <Route exact path="/signup">
             <SignUp />
           </Route>
-          <Route path="/story/:id">
+          <Route exact path="/story/:id">
             <Story />
           </Route>
-          <Route path="/profile/:id">
+          <Route exact path="/profile/:id">
             <Profile />
           </Route>
-          <Route path="/new-story">
+          <Route exact path="/new-story">
             <StoryForm />
           </Route>
-        </Switch>
       </Router>
     </div>
   );
