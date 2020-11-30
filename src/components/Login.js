@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,8 +11,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Redirect} from 'react-router-dom'
-import {connect} from 'react-redux';
 import {useDispatch, useSelector} from 'react-redux'
 import history from "../history"
 import "fontsource-rubik";
@@ -77,14 +75,6 @@ function Login() {
         })
     };
 
-    const handleEmailChange = (e) => {
-        console.log(e.target)
-        dispatch({
-            type: "CHANGE_EMAIL_INPUT",
-            value: e.target.value
-        })
-    };
-
     const logIn = (e) => {
         e.preventDefault();
         fetch("http://localhost:3000/login", {
@@ -94,15 +84,14 @@ function Login() {
                 Accept: 'application/json',
             },
             body: JSON.stringify({
-            
-                    username: usernameInput, 
-                    email: emailInput, 
-                    password: passwordInput
-                
+                username: usernameInput, 
+                email: emailInput, 
+                password: passwordInput    
             })
         })
-        .then(resp => resp.json())
-        .then(async(data) => {
+        .then(res => res.json())
+        .then(
+            async(data) => {
             if (data.error) {
                 console.log(data.message)
             }else {
@@ -117,7 +106,7 @@ function Login() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -137,18 +126,6 @@ function Login() {
               name="username"
               autoComplete="username"
               onChange={(e)=>handleUsernameChange(e)}
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              onChange={(e)=>handleEmailChange(e)}
               autoFocus
             />
             <TextField
