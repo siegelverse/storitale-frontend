@@ -60,7 +60,6 @@ function Login() {
     const emailInput = useSelector(state => state.emailInput)
 
     const handleUsernameChange = (e) => {
-        console.log(e.target)
         dispatch({
             type: "CHANGE_USERNAME_INPUT",
             value: e.target.value
@@ -68,12 +67,19 @@ function Login() {
     };
 
     const handlePasswordChange = (e) => {
-        console.log(e.target)
         dispatch({
             type: "CHANGE_PASSWORD_INPUT",
             value: e.target.value
         })
     };
+
+  //   const handleEmailChange = (e) => {
+  //     console.log(e.target)
+  //     dispatch({
+  //         type: "CHANGE_EMAIL_INPUT",
+  //         value: e.target.value
+  //     })
+  // };
 
     const logIn = (e) => {
         e.preventDefault();
@@ -84,9 +90,11 @@ function Login() {
                 Accept: 'application/json',
             },
             body: JSON.stringify({
+              user: {
                 username: usernameInput, 
                 email: emailInput, 
-                password: passwordInput    
+                password: passwordInput  
+              }  
             })
         })
         .then(res => res.json())

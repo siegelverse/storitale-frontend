@@ -11,7 +11,10 @@ export const initialState = {
     updateBio: "",
     updatePassword: "",
     story: {},
-    loggedInUser: null,
+    review: [],
+    follow: [],
+    favs: [],
+    tab: 0,
 }
   
 export const reducer = (state = initialState, action) => {
@@ -53,10 +56,22 @@ export const reducer = (state = initialState, action) => {
             return{...state, updatePassword: action.value}
         break;
         case 'LOGOUT_USER':
-            return {...state, currentUser: {} }
+            return {...state, currentUser: action.user }
         break;
         case 'SET_CURRENT_STORY':
             return{...state, story: action.story}
+        break;
+        case 'SET_REVIEW':
+            return{...state, review: action.data}
+        break;
+        case 'SET_TAB_VALUE':
+            return{...state, tab: action.tab}
+        break;
+        case 'SET_FOLLOWING':
+            return{...state, follow: action.follow}
+        break;
+        case 'SET_FAVORITES':
+            return{...state, favs: action.favs}
         break;
         default:
             return state;

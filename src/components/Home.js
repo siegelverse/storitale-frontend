@@ -1,14 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import StoryCard from './StoryCard';
+import HomeBanner from './HomeBanner'
 
 
 export default function Home() {
     const [stories, setStories] = useState([]);
     const loggedInUser = useSelector(state => state.currentUser)
+    const followColl = useSelector(state => state.follow)
+    const dispatch = useDispatch()
+    useEffect(()=> {
+
+        fetch(`http://localhost:3000/users/${loggedInUser.id}/follow`)
+        .then(res => res.json())
+        .then(data => { 
+            dispatch({
+                type: "SET_FOLLOWING",
+                follow: data
+            })
+        })
+        console.log(followColl)
+    }, [])
 
     useEffect(()=> {
-        fetch("http://localhost:3000/stories")
+
+        fetch("http://localhost:3000/stories", {
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`,
+            },
+        })
         .then(res => res.json())
         .then(stories => { 
             console.log(stories)
@@ -16,16 +36,17 @@ export default function Home() {
         })
     }, [])
 
-    console.log(stories.stories)
+    console.log(loggedInUser)
     return (
         <div>
-            <h1>{`Welcome ${loggedInUser.username}!`}</h1>
+            <HomeBanner />
+            <br />
             {stories.length ?
                 stories.map((story) => {
                     return (
                         <StoryCard story={story} />
                     )
-            }) : <h1>Loading Data</h1>}  
+            }) : <h1>Loading Data...</h1>}  
         </div>
     )
 }

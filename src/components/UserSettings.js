@@ -11,6 +11,7 @@ export default function UserSettings() {
     const usernameInput = useSelector(state => state.updateUsername)
     const bioInput = useSelector(state => state.updateBio)
     const passwordInput = useSelector(state => state.updatePassword)
+    const loggedInUser = useSelector(state => state.currentUser)
 
 
     const handleImageChange = (e) => {
@@ -45,20 +46,11 @@ export default function UserSettings() {
         })
     };
 
-    let token = localStorage.token; 
-    function parseJwt(token) {
-        if (!token) { return; }
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-    }
-    const newToken = parseJwt(token)
-    console.log(newToken.id)
 
     const updateUser = (e) => {
 
         e.preventDefault();
-        fetch(`http://localhost:3000/users/${newToken.id}`, {
+        fetch(`http://localhost:3000/users/${loggedInUser.id}`, {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
@@ -69,13 +61,13 @@ export default function UserSettings() {
                 username: usernameInput, 
                 bio: bioInput, 
                 password: passwordInput, 
-                id: newToken.id
+                id: loggedInUser.id
             })
         })
         .then(res => res.json())
         .then(data => {
            console.log(data)
-           history.push(`profile/${newToken.id}`)
+           history.push(`profile/${loggedInUser.id}`)
         })
     };
 

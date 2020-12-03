@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import ReviewCards from './ReviewCards'
 
 export default function RenderReviews() {
     const currentStory = useSelector(state => state.story)
-    const [renderReviews, setRenderReviews] = useState([])
+    const dispatch = useDispatch()
+    const renderReviews = useSelector(state => state.review)
 
     useEffect(()=>{
         fetch(`http://localhost:3000/stories/${currentStory.id}/reviews`)
         .then(res => res.json())
         .then(data => {
            console.log(data)
-           setRenderReviews(data)
+           dispatch({
+            type: "SET_REVIEW",
+            data
+         })
         })
     }, [])
 

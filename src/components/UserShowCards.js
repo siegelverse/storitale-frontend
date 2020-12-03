@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
+import history from "../history"
 import "fontsource-rubik";
 
 const useStyles = makeStyles({
@@ -27,38 +28,23 @@ const useStyles = makeStyles({
   },
 });
 
-
-export default function StoryCard(props) {
+export default function UserShowCards(props) {
   const dispatch = useDispatch()
   const classes = useStyles();
-  const currentStory = useSelector(state => state.story)
   const loggedInUser = useSelector(state => state.currentUser)
 
-  
   const handleSetStory = (e) => {
     dispatch({
       type: "SET_CURRENT_STORY",
       story: props.story
     })
   }
+  
   console.log(props)
   return (
     <Container maxWidth="md">
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        {loggedInUser.id === props.story.user.id ?
-            <Link to={`/profile/${props.story.user.id}`} onClick={(e)=>handleSetStory(e)} color="inherit">
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                  {props.story.user.username}
-              </Typography>
-            </Link>
-          :
-            <Link to={`/users/${props.story.user.id}`} onClick={(e)=>handleSetStory(e)} color="inherit">
-              <Typography className={classes.title} color="textSecondary" gutterBottom>
-                {props.story.user.username}
-              </Typography>
-            </Link>
-          }
         <Typography variant="h5" component="h2">
           {props.story.title}
         </Typography>

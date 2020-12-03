@@ -1,7 +1,7 @@
 import { Button, CardActions, Container } from '@material-ui/core'
 import React, {useState} from 'react'
 import Card from '@material-ui/core/Card';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import RenderReviews from './RenderReviews';
@@ -28,6 +28,7 @@ export default function Review() {
     const currentStory = useSelector(state => state.story)
     const loggedInUser = useSelector(state => state.currentUser)
     const [review, setReview] = useState("")
+    const dispatch = useDispatch()
 
     const handleChange = (e) => {
         console.log(e.target.value)
@@ -49,7 +50,10 @@ export default function Review() {
         })
         .then(res => res.json())
         .then(data => {
-           console.log(data)
+           dispatch({
+               type: "SET_REVIEW",
+               data
+            })
         })
     }
     return (

@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignUp() {
+const SignUp = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
     const usernameInput = useSelector(state => state.usernameInput)
@@ -74,7 +74,7 @@ function SignUp() {
     };
 
   const handleOnSubmit = (e) => {
-    return fetch("http://localhost:3000/users", {
+    fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
@@ -87,20 +87,20 @@ function SignUp() {
         })
     })
     .then(resp => resp.json())
-    .then(async (data) => {
+    .then((data) => {
+        console.log(data)
         if (data.message) {
             console.log("sign up no good")
         } else {
-            localStorage.setItem("token", data.token)
-            await dispatch({
+            localStorage.token = data.token
+            dispatch({
                 type: "LOGIN_USER", 
                 user: data.user
             })
             history.push("/home")
         }
-    })
+      })
   }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

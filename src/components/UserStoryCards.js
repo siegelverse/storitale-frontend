@@ -9,6 +9,7 @@ import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux'
 import {Link} from 'react-router-dom'
 import DeleteIcon from '@material-ui/icons/Delete';
+import history from "../history"
 import "fontsource-rubik";
 
 const useStyles = makeStyles({
@@ -28,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StoryCard(props) {
+export default function UserStoryCards(props) {
   const dispatch = useDispatch()
   const classes = useStyles();
   const loggedInUser = useSelector(state => state.currentUser)
@@ -51,6 +52,7 @@ export default function StoryCard(props) {
     .then(data => {
         console.log(data)
     })
+    history.push(`${loggedInUser.id}`)
   }
 
   console.log(props)
