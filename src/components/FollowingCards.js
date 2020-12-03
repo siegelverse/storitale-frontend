@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -33,6 +33,7 @@ export default function FollowingCards(props) {
     const dispatch = useDispatch()
     const classes = useStyles();
     const loggedInUser = useSelector(state => state.currentUser)
+    const [followedUser, setFollowedUser] = useState({})
 
     const deleteFollow = (e) => {
         fetch(`http://localhost:3000/users/${loggedInUser.id}/follow`, {
@@ -55,20 +56,29 @@ export default function FollowingCards(props) {
             console.log(data)
         })
     }
-    
+    console.log(props)
+
+    useEffect(()=> {
+        fetch(`http://localhost:3000/users/${props.user.followable_id}`)
+        .then(res => res.json())
+        .then(user => { 
+            setFollowedUser(user)
+        })       
+    }, [])
+
   return (
     <div>
       <Container maxWidth="xs">
         <Card className={classes.root} variant="outlined">
           <CardContent>
-          <img alt={props.user.username} src={props.user.image} style={{ height: '80px', width: '80px', justify: "center", borderRadius: "50%"}} />
-          <Link to={`/users/${props.user.id}`} color="inherit">
+          <img alt={followedUser.username} src={followedUser.image} style={{ height: '80px', width: '80px', justify: "center", borderRadius: "50%"}} />
+          <Link to={`/users/${followedUser.id}`} color="inherit">
             <Typography variant="h5" component="h2">
-              {props.user.username}
+              {followedUser.username}
             </Typography>
             </Link>
             <Typography variant="body2" component="p" color="textSecondary">
-              {props.user.bio}
+              {followedUser.bio}
             </Typography>
           </CardContent>
             <Button variant="outlined" color="primary" size="small" onClick={(e)=>deleteFollow(e)} startIcon={<DeleteIcon />}>

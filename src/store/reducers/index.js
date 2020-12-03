@@ -13,6 +13,7 @@ export const initialState = {
     story: {},
     review: [],
     follow: [],
+    userStories: [],
     favs: [],
     tab: 0,
 }
@@ -72,6 +73,9 @@ export const reducer = (state = initialState, action) => {
         break;
         case 'SET_FAVORITES':
             return{...state, favs: action.favs}
+        break;
+        case 'SET_USER_STORIES':
+            return{...state, userStories: action.stories}
         break;
         default:
             return state;

@@ -13,6 +13,18 @@ import { useDispatch, useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
 import UserSettings from "./components/UserSettings";
 import UserShow from "./components/UserShow";
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#007bff",
+    },
+    secondary: {
+      main: '#ff00a8',
+    },
+  },
+});
 
 function App() {
   // let token = localStorage.token;
@@ -58,6 +70,7 @@ function App() {
   // });
 
   return (
+    <MuiThemeProvider theme={theme}>
     <div className="App">
       <Router history={history}>
         <NavBar />
@@ -88,6 +101,7 @@ function App() {
         </Route>
       </Router>
     </div>
+    </MuiThemeProvider>
   );
 }
 

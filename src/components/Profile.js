@@ -12,10 +12,10 @@ export default function Profile() {
     const currentStory = useSelector(state => state.story)
     const loggedInUser = useSelector(state => state.currentUser)
     const tab = useSelector(state => state.tab)
-    const [userStories, setUserStories] = useState([])
     const followColl = useSelector(state => state.follow)
     const favsColl = useSelector(state => state.favs)
     const dispatch = useDispatch()
+    const userStories = useSelector(state => state.userStories)
     console.log(loggedInUser)
     console.log(currentStory)
 
@@ -24,7 +24,10 @@ export default function Profile() {
         .then(res => res.json())
         .then(user => { 
             console.log(user.stories)
-            setUserStories(user.stories)
+            dispatch({
+                type: 'SET_USER_STORIES',
+                stories: user.stories
+            })
         })
     }, [])
 

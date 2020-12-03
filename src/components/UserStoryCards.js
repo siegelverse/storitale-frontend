@@ -50,9 +50,11 @@ export default function UserStoryCards(props) {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data)
+        dispatch({
+            type: 'SET_USER_STORIES',
+            stories: data
+        })
     })
-    history.push(`${loggedInUser.id}`)
   }
 
   console.log(props)

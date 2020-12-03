@@ -8,7 +8,6 @@ import {Link} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     root: {
         flex: 'grow',
-        backgroundColor: '#FF2571',
         padding: '25px',
         justify: "flex-start",
     },

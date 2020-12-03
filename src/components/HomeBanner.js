@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
     root: {
         flex: 'grow',
-        backgroundColor: '#FF2571',
         padding: '20px',
         minHeight: '150px'
     },

@@ -9,7 +9,6 @@ import CheckIcon from '@material-ui/icons/Check';
 const useStyles = makeStyles((theme) => ({
     root: {
         flex: 'grow',
-        backgroundColor: '#FF2571',
         padding: '20px',
     },
     font: {

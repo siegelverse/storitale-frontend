@@ -67,7 +67,7 @@ export default function UserSettings() {
         .then(res => res.json())
         .then(data => {
            console.log(data)
-           history.push(`profile/${loggedInUser.id}`)
+           history.push(`/home`)
         })
     };
 
